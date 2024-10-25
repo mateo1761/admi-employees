@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Deparment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
@@ -11,5 +12,11 @@ class Employee extends Model
 
     protected $table = 'employees';
 
-    protected $fillable = ['name', 'email', 'phone', 'department_id'];
+    protected $fillable = ['name', 'email', 'phone', 'deparments_id'];
+
+    // Definir la relación con el modelo Department
+    public function department()
+    {
+        return $this->belongsTo(Deparment::class, 'deparments_id');
+    }
 }

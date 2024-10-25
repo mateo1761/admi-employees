@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Deparment;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EmployeeFactory extends Factory
 {
+    protected $model = Employee::class;
+
     /**
      * Define the model's default state.
      *
@@ -18,9 +22,9 @@ class EmployeeFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->email(),
+            'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->e164PhoneNumber(),
-            'department_id' => $this->faker->numberBetween(1,6)
+            'deparments_id' => Deparment::factory()
         ];
     }
 }

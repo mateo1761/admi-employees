@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Deparment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DeparmentFactory extends Factory
 {
+    protected $model = Deparment::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,7 @@ class DeparmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->jobTitle()
+            'name' => $this->faker->company()
         ];
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use App\Models\Deparment;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Department\StoreDepartmentRequest;
+use App\Http\Requests\Department\UpdateDeparmentRequest;
 
 class DeparmentController extends Controller
 {
@@ -30,13 +32,10 @@ class DeparmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDepartmentRequest $request)
     {
-        $request->validate(['name' => 'required|max:100']);
 
-        $deparment = new Deparment($request->input());
-
-        $deparment->save();
+        Deparment::create($request->validated());
 
         return redirect('deparments');
     }
@@ -60,11 +59,9 @@ class DeparmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Deparment $deparment)
+    public function update(UpdateDeparmentRequest $request, Deparment $deparment)
     {
-        $request->validate(['name' => 'required|max:100']);
-
-        $deparment->update($request->input());
+        $deparment->update($request->validated());
 
         return redirect('deparments');
     }
