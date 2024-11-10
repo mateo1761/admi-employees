@@ -37,7 +37,7 @@ class DeparmentController extends Controller
 
         Deparment::create($request->validated());
 
-        return redirect('deparments');
+        return redirect()->route('deparments.index')->with('success', 'Departamento creado exitosamente.');
     }
 
     /**
@@ -63,7 +63,7 @@ class DeparmentController extends Controller
     {
         $deparment->update($request->validated());
 
-        return redirect('deparments');
+        return redirect()->route('deparments.index')->with('success', 'Departamento actualizado exitosamente.');
     }
 
     /**
@@ -72,6 +72,6 @@ class DeparmentController extends Controller
     public function destroy(Deparment $deparment)
     {
         $deparment->delete();
-        return redirect('deparments');
+        return redirect()->route('deparments.index')->with('success', 'Departamento eliminado exitosamente.');
     }
 }
