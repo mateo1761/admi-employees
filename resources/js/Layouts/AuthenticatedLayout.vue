@@ -33,6 +33,36 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                             </div>
+
+                            <!-- Department Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('deparments.index')" :active="route().current('deparments.index')">
+                                    Departamentos
+                                </NavLink>
+                            </div>
+
+                            <!-- Employees Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('employees.index')" :active="route().current('employees.index')">
+                                    Empleados
+                                </NavLink>
+                            </div>
+
+                            
+                            <!-- Craphic Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('graphic')" :active="route().current('graphic')">
+                                    Grafico empleados
+                                </NavLink>
+                            </div>
+
+                            
+                            <!-- Reports Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('reports')" :active="route().current('reports')">
+                                    Reporte empleados
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -114,6 +144,18 @@ const showingNavigationDropdown = ref(false);
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('deparments.index')" :active="route().current('deparments.index')">
+                            Departamentos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('employees.index')" :active="route().current('employees.index')">
+                            Empleados
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('graphic')" :active="route().current('graphic')">
+                            Grafico empleados
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('reports')" :active="route().current('reports')">
+                            Reportes empleados
                         </ResponsiveNavLink>
                     </div>
 
