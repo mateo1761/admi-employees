@@ -39,7 +39,7 @@ class EmployeeController extends Controller
     {
         Employee::create($request->validated());
 
-        return redirect('employees');
+        return redirect()->route('employees.index')->with('success', 'Empleado creado exitosamente.');
     }
 
     /**
@@ -65,7 +65,7 @@ class EmployeeController extends Controller
     {
         $employee->update($request->validated());
 
-        return redirect('employees');
+        return redirect()->route('employees.index')->with('success', 'Empleado actualizado exitosamente.');
     }
 
     /**
@@ -74,15 +74,12 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect('employees');
+        return redirect()->route('employees.index')->with('success', 'Empleado eliminado exitosamente.');
     }
 
     public function employeeByDeparment()
     {
-        $data = Employee::with('department')
-                        ->select(DB::raw('count(employees.id) AS count, departments.name'))
-                        ->groupBy('departments.name')
-                        ->get();
+        $data = Deparment::withCount('employees')->get();
 
         return Inertia::render('Employees/Graphic', ['data' => $data]);
     }
