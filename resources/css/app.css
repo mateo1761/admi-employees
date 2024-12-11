@@ -1,3 +1,4 @@
+@import '/node_modules/@ocrv/vue-tailwind-pagination/dist/style.css';
 @import '/node_modules/flowbite/dist/flowbite.css';
 @import '/node_modules/simple-datatables/dist/style.css';
 @tailwind base;
