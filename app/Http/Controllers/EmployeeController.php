@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Employee;
 use App\Models\Deparment;
 use Illuminate\Http\Request;
+use App\Mail\EmployeeCreated;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
-use App\Models\Employee;
-use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -37,9 +41,11 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        Employee::create($request->validated());
+        $employee = Employee::create($request->validated());
 
-        return redirect('employees');
+        $this->sendEmailCreateEmployee($employee);
+
+        return redirect()->route('employees.index')->with('success', 'Empleado creado exitosamente.');
     }
 
     /**
@@ -65,7 +71,7 @@ class EmployeeController extends Controller
     {
         $employee->update($request->validated());
 
-        return redirect('employees');
+        return redirect()->route('employees.index')->with('success', 'Empleado actualizado exitosamente.');
     }
 
     /**
@@ -74,15 +80,14 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect('employees');
+        return redirect()->route('employees.index')->with('success', 'Empleado eliminado exitosamente.');
     }
 
     public function employeeByDeparment()
     {
-        $data = Employee::with('department')
-                        ->select(DB::raw('count(employees.id) AS count, departments.name'))
-                        ->groupBy('departments.name')
-                        ->get();
+        $data = Deparment::select('id', 'name')
+        ->withCount('employees')
+        ->get();
 
         return Inertia::render('Employees/Graphic', ['data' => $data]);
     }
@@ -95,5 +100,16 @@ class EmployeeController extends Controller
         return Inertia::render('Employees/Reports', ['employees' => $employees , 'deparments' => $deparments]);
     }
 
+    public function sendEmailCreateEmployee($employee){
+        $email = Auth::user()->email;
+
+        try {
+            Mail::to($email)->send(new EmployeeCreated($employee));
+        } catch (\Exception $e) {
+            Log::error('Error al enviar correo: ' . $e->getMessage());
+        }
+
+        return true;
+    }
 
 }
